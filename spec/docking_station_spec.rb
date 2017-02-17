@@ -7,14 +7,12 @@ describe DockingStation do
 
   it { is_expected.to respond_to(:docked_bikes) }
 
-  it { is_expected.to respond_to(:capacity) }
-
   it "can hold a number of bikes" do
     expect(subject.docked_bikes).to be_an_instance_of Array
   end
 
   it "has a default capacity which is a number" do
-    expect(subject.capacity).to be_an_instance_of Fixnum
+    expect(DockingStation::DEFAULT_CAPACITY).to be_an_instance_of Fixnum
   end
 
   describe "#release_bike" do
@@ -43,8 +41,9 @@ describe DockingStation do
 
     it "raises an error if dock full" do
       bike = Bike.new
-      subject.capacity.times { subject.dock(bike) }
+      DockingStation::DEFAULT_CAPACITY.times { subject.dock(bike) }
       expect{subject.dock(bike)}.to raise_error "Docking Station Full!"
     end
   end
+
 end
