@@ -1,55 +1,50 @@
 require 'docking_station'
 
 describe DockingStation do
-
-  it "responds to release_bike" do
-    expect(subject).to respond_to :release_bike
-  end
-
-  it "it releases a working bike" do #10
-    bike = subject.release_bike
-    expect(bike).to be_working
-  end
+  it { is_expected.to respond_to(:release_bike) }
 
   it { is_expected.to respond_to(:dock).with(1).argument }
 
-  it { is_expected.to respond_to(:bike)}
+  it { is_expected.to respond_to(:docked_bikes) }
 
-  it "docks a bike" do
-    bike = Bike.new
-    expect(subject.dock(bike)).to eq(bike)
+  it { is_expected.to respond_to(:capacity) }
+
+  it "can hold a number of bikes" do
+    expect(subject.docked_bikes).to be_an_instance_of Array
   end
 
-  it "returns bike if docked" do
-    bike = Bike.new
-    subject.dock(bike)
-    expect(subject.bike).to eq(bike)
+  it "has a default capacity which is a number" do
+    expect(subject.capacity).to be_an_instance_of Fixnum
   end
 
-  it "releases a bike" do
-    bike = Bike.new
-    subject.dock(bike)
-    expect(subject.release_bike).to eq bike
-  end
+  describe "#release_bike" do
+    it "it releases a working bike" do #10
+      bike = Bike.new
+      subject.dock(bike)
+      expect(subject.release_bike).to be_working
+    end
 
-#=begin
-  describe "#release_bike" do #13
+    it "releases a bike" do
+      bike = Bike.new
+      subject.dock(bike)
+      expect(subject.release_bike).to eq bike
+    end
+
     it "raises an error if no bikes available" do
-  #    bike = Bike.new
-  #    subject.dock(bike)
       expect{ subject.release_bike }.to raise_error "No bikes available!"
     end
   end
-#=end
 
-=begin
   describe "#dock(bike)" do
+    it "docks a bike" do
+      bike = Bike.new
+      expect(subject.dock(bike)).to eq(bike)
+    end
+
     it "raises an error if dock full" do
       bike = Bike.new
-      subject.dock(bike)
-      expect{subject.dock(bike)}.to raise_error "Dock Full!"
+      subject.capacity.times { subject.dock(bike) }
+      expect{subject.dock(bike)}.to raise_error "Docking Station Full!"
     end
   end
-=end
-
 end
