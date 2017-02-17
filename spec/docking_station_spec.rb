@@ -15,6 +15,11 @@ describe DockingStation do
     expect(DockingStation::DEFAULT_CAPACITY).to be_an_instance_of Fixnum
   end
 
+  it "Sets the capacity" do
+    expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+  end
+
+
   describe "#release_bike" do
     it "it releases a working bike" do #10
       bike = Bike.new
@@ -45,5 +50,10 @@ describe DockingStation do
       expect{subject.dock(bike)}.to raise_error "Docking Station Full!"
     end
   end
+
+
+
+
+
 
 end
