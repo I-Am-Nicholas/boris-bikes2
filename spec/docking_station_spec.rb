@@ -15,7 +15,7 @@ describe DockingStation do
     expect(DockingStation::DEFAULT_CAPACITY).to be_an_instance_of Fixnum
   end
 
-  it "Sets the capacity" do
+  it "Sets the default capacity correctly" do
     expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
   end
 
